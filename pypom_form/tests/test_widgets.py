@@ -366,3 +366,17 @@ def test_widget_checkbox_input_selector():
     widget = CheckboxWidget()
 
     assert widget.input_selector == ('css', 'input[type="checkbox"]')
+
+
+def test_widget_region_root_selector(browser):
+    from pypom_form.widgets import BaseWidget
+    from pypom_form.widgets import BaseWidgetRegion
+
+    assert BaseWidget.region_class == BaseWidgetRegion
+
+    field = mock.MagicMock(**{'selector': ('id', 'xyz')})
+    widget = BaseWidget(field=field)
+    import pypom
+    page = pypom.Page(browser)
+
+    assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
