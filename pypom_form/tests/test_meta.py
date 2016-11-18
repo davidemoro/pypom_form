@@ -317,3 +317,38 @@ def test_pypom_inner_attribute_form_region(browser):
     assert subform.__pypom__.keys() == ['title', 'name']
     assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
     assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
+
+
+def test_meta_form_page_widget_region(browser):
+    """ test metaclass with pypom form page"""
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+    from pypom_form.meta import PyPOMFormMetaclass
+
+    class SubFormPage(BaseFormPage):
+        __metaclass__ = PyPOMFormMetaclass
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+    title_region = subform.getWidgetRegion('title')
+    name_region = subform.getWidgetRegion('name')
+
+    from pypom_form.widgets import BaseWidgetRegion
+    assert isinstance(title_region, BaseWidgetRegion)
+    assert isinstance(name_region, BaseWidgetRegion)
