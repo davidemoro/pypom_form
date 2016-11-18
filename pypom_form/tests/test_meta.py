@@ -32,10 +32,10 @@ def test_meta(browser):
                                        kwargs={'test': 1}))
 
     import pypom
-    from pypom_form.meta import PageEditMetaclass
+    from pypom_form.meta import PyPOMFormMetaclass
 
     class SubFormPage(pypom.Page):
-        __metaclass__ = PageEditMetaclass
+        __metaclass__ = PyPOMFormMetaclass
         schema_factory = SubFormSchema
 
     subform = SubFormPage(browser)

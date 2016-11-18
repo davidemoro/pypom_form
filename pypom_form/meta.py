@@ -25,7 +25,19 @@ def _getWidgetRegion(self, name):
     return self.__pypom__[name].pypom_widget.getWidgetRegion(self)
 
 
-class PageEditMetaclass(type):
+class PyPOMFormMetaclass(type):
+    """ This is the metaclass that empower the page or region
+        form with dynamically generated getter and setter
+        attributes depending on the declarative schema.
+
+        Thanks to this metaclass you are able to set or access
+        values driving your browser with ``page.title = 'title'``
+        or ``page.title``.
+
+        It add a ``getWidgetRegion`` method if you want to
+        look up a region widget for advanced widget interactions
+        accessing to region widget methods.
+    """
 
     def __new__(cls, clsname, bases, dct):
         schema_factory = dct.get('schema_factory', None)

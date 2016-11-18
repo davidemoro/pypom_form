@@ -3,18 +3,18 @@ from pypom import (
     Region,
 )
 
-from .meta import PageEditMetaclass
+from .meta import PyPOMFormMetaclass
 
 
 class BaseFormPage(Page):
     """ This is the base page form class
         for schema based page objects.
     """
-    __metaclass__ = PageEditMetaclass
+    __metaclass__ = PyPOMFormMetaclass
 
 
 class BaseFormRegion(Region):
     """ This is the base region form class
         for schema based page objects.
     """
-    __metaclass__ = PageEditMetaclass
+    __metaclass__ = PyPOMFormMetaclass
