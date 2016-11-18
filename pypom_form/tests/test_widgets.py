@@ -380,3 +380,14 @@ def test_widget_region_root_selector(browser):
     page = pypom.Page(browser)
 
     assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
+
+
+def test_get_input_element(browser):
+    from pypom_form.widgets import StringWidget
+
+    widget = StringWidget()
+    widget.getWidgetRegion = mock.MagicMock(
+        **{'return_value.find_element.return_value': 'element'})
+    import pypom
+    page = pypom.Page(browser)
+    widget.get_input_element(page) == 'element'

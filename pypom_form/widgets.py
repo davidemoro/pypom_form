@@ -78,9 +78,9 @@ class BaseWidget(object):
 
             Otherwise the region root will be returned
         """
-        element = self.getWidgetRegion(page). \
-            find_element(*self.input_selector)
-        element = element or element or self.root
+        region = self.getWidgetRegion(page)
+        element = region.find_element(*self.input_selector)
+        element = element or element or region.root
         return element
 
     def getWidgetRegion(self, page):
