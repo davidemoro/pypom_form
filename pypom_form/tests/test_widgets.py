@@ -341,3 +341,28 @@ def test_widget_base_region_class_custom():
     widget = BaseWidget(region_class=pypom.Region)
 
     assert widget.region_class == pypom.Region
+
+
+def test_widget_base_input_selector_raises():
+    from pypom_form.widgets import BaseWidget
+
+    widget = BaseWidget()
+
+    with pytest.raises(NotImplementedError):
+        widget.input_selector
+
+
+def test_widget_string_input_selector():
+    from pypom_form.widgets import StringWidget
+
+    widget = StringWidget()
+
+    assert widget.input_selector == ('tag', 'input')
+
+
+def test_widget_checkbox_input_selector():
+    from pypom_form.widgets import CheckboxWidget
+
+    widget = CheckboxWidget()
+
+    assert widget.input_selector == ('css', 'input[type="checkbox"]')
