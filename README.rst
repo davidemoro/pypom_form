@@ -24,13 +24,9 @@ pypom_form
 
 It is internally based on:
 
-* `pytest`_
-* `pytest_splinter`_
 * `PyPOM`_
 * `colander`_
 
 
-.. _pytest: http://doc.pytest.org
-.. _pytest_splinter: http://pytest-splinter.readthedocs.io
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
