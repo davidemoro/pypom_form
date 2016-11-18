@@ -6,15 +6,21 @@ from pypom import (
 from .meta import PyPOMFormMetaclass
 
 
-class BaseFormPage(Page):
-    """ This is the base page form class
-        for schema based page objects.
-    """
-    __metaclass__ = PyPOMFormMetaclass
+BaseFormPage = PyPOMFormMetaclass(
+    str('BaseFormPage'),
+    (Page,),
+    {
+        '__doc__': 'This is the base page form class'
+                   'for schema based page objects.'
+    }
+)
 
 
-class BaseFormRegion(Region):
-    """ This is the base region form class
-        for schema based page objects.
-    """
-    __metaclass__ = PyPOMFormMetaclass
+BaseFormRegion = PyPOMFormMetaclass(
+    str('BaseFormRegion'),
+    (Region,),
+    {
+        '__doc__': 'This is the base region form class'
+                   'for schema based page objects.'
+    }
+)
