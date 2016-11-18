@@ -19,15 +19,18 @@ pypom_form
 
 
 
-``pypom_form`` is a package that...
+``pypom_form`` is a PyPOM based package that provides declarative schema based form interaction for page objects.
+
 
 It is internally based on:
 
 * `pytest`_
 * `pytest_splinter`_
 * `PyPOM`_
+* `colander`_
 
 
 .. _pytest: http://doc.pytest.org
 .. _pytest_splinter: http://pytest-splinter.readthedocs.io
 .. _PyPOM: http://pypom.readthedocs.io
+.. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
