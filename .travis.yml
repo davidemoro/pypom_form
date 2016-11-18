@@ -3,25 +3,13 @@ sudo: required
 
 python:
   - "2.7"
+  - "3.5"
 
 env:
   - TOXENV=docs
   - TOXENV=linkcheck
   - TOXENV=codecov
   - TOXENV=pycodestyle
-
-matrix:
-  include:
-  - python: 2.7
-    env: TOXENV=py27
-  - python: 2.7
-    env: TOXENV=docs
-  - python: 2.7
-    env: TOXENV=linkcheck
-  - python: 2.7
-    env: TOXENV=codecov
-  - python: 2.7
-    env: TOXENV=pycodestyle
 
 before_install:
   - sudo apt-get -qq update
