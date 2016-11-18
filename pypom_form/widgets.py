@@ -30,7 +30,7 @@ class BaseWidgetRegion(BaseFormRegion):
         """ Return the widget text help """
         raise NotImplementedError
 
-    def get_validation_error(self):
+    def get_validation_errors(self):
         """ Return the widget validation error """
         raise NotImplementedError
 

@@ -1,15 +1,3 @@
-import pytest
-
-
-@pytest.fixture
-def browser():
-    import mock
-    browser = mock.MagicMock()
-
-    from zope.interface import alsoProvides
-    from pypom.splinter_driver import ISplinter
-    alsoProvides(browser, ISplinter)
-    return browser
 
 
 def test_meta_standard_page(browser):
@@ -74,10 +62,8 @@ def test_meta_form_page(browser):
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
-    from pypom_form.meta import PyPOMFormMetaclass
 
     class SubFormPage(BaseFormPage):
-        __metaclass__ = PyPOMFormMetaclass
         schema_factory = SubFormSchema
 
     subform = SubFormPage(browser)

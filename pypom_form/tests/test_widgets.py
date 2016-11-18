@@ -252,3 +252,72 @@ def test_float_widget_2():
     page_mock.setter = -1.1
     assert get_input_element_mock. \
         return_value.fill.assert_called_once_with('-1.1') is None
+
+
+def test_region_widget_not_implemented(browser):
+    """ Region widget """
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class SubFormPage(BaseFormPage):
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+
+    from pypom_form.widgets import BaseWidgetRegion
+    widget_region = BaseWidgetRegion(subform)
+
+    with pytest.raises(NotImplementedError):
+        widget_region.get_help()
+    with pytest.raises(NotImplementedError):
+        widget_region.get_validation_errors()
+
+
+def test_region_widget_get_label(browser):
+    """ Region widget """
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class SubFormPage(BaseFormPage):
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+
+    from pypom_form.widgets import BaseWidgetRegion
+    widget_region = BaseWidgetRegion(subform)
+
+    widget_region.find_element = mock.MagicMock(**{
+        'return_value.value': 'title'})
+    assert widget_region.get_label() == 'title'
