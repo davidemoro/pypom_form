@@ -16,7 +16,7 @@ def test_meta_standard_page(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -58,7 +58,7 @@ def test_meta_form_page(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
@@ -98,7 +98,7 @@ def test_meta_standard_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -140,7 +140,7 @@ def test_meta_form_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -181,7 +181,7 @@ def test_pypom_inner_attribute_standard_page(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -217,7 +217,7 @@ def test_pypom_inner_attribute_form_page(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
@@ -251,7 +251,7 @@ def test_pypom_inner_attribute_standard_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -287,7 +287,7 @@ def test_pypom_inner_attribute_form_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
@@ -321,7 +321,7 @@ def test_meta_form_page_widget_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
@@ -354,7 +354,7 @@ def test_meta_form_region_widget_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     import pypom
@@ -388,7 +388,7 @@ def test_mixed_page_region(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
@@ -425,7 +425,7 @@ def test_mixed_page_region_page_reference(browser):
     class SubFormSchema(BaseFormSchema):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
-                                   pwidget=MyStringWidget(
+                                   pypom_widget=MyStringWidget(
                                        kwargs={'test': 1}))
 
     from pypom_form.form import BaseFormPage
