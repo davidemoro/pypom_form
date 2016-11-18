@@ -391,3 +391,15 @@ def test_get_input_element(browser):
     import pypom
     page = pypom.Page(browser)
     widget.get_input_element(page) == 'element'
+
+
+def test_get_input_element_no_container(browser):
+    from pypom_form.widgets import StringWidget
+
+    widget = StringWidget()
+    widget.getWidgetRegion = mock.MagicMock(
+        **{'return_value.find_element.return_value': None,
+           'return_value.root': 'root'})
+    import pypom
+    page = pypom.Page(browser)
+    widget.get_input_element(page) == 'root'
