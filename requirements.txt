@@ -6,7 +6,7 @@ mock==2.0.0
 pbr==1.10.0
 pluggy==0.4.0
 py==1.4.31
--e git+git@github.com:mozilla/PyPOM.git#egg=PyPOM
+-e git+https://github.com/mozilla/PyPOM.git#egg=PyPOM
 pytest==3.0.4
 pytest-cov==2.4.0
 pytest-splinter==1.7.7
