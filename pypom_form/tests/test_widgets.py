@@ -321,3 +321,23 @@ def test_region_widget_get_label(browser):
     widget_region.find_element = mock.MagicMock(**{
         'return_value.value': 'title'})
     assert widget_region.get_label() == 'title'
+
+
+def test_widget_base_region_class():
+    from pypom_form.widgets import BaseWidget
+    from pypom_form.widgets import BaseWidgetRegion
+
+    assert BaseWidget.region_class == BaseWidgetRegion
+
+    widget = BaseWidget()
+
+    assert widget.region_class == BaseWidgetRegion
+
+
+def test_widget_base_region_class_custom():
+    from pypom_form.widgets import BaseWidget
+    import pypom
+
+    widget = BaseWidget(region_class=pypom.Region)
+
+    assert widget.region_class == pypom.Region
