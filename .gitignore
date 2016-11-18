@@ -1,0 +1,17 @@
+.cache
+*.egg-info
+*.pyc
+*.pyo
+*.swp
+*.log
+*.xml
+.tox
+.eggs/
+credentials.yml
+python
+__pycache__
+bin/*
+.idea/*
+pypom_form/screenshots/*
+/docs/_build/
+.coverage

@@ -1,0 +1,7 @@
+include *.md
+include *.ini
+include *.txt
+include *.yml
+include *.json
+recursive-include docs *.txt
+recursive-include pypom_form *.feature
