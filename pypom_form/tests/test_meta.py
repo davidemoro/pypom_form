@@ -384,3 +384,40 @@ def test_meta_form_region_widget_region(browser):
     from pypom_form.widgets import BaseWidgetRegion
     assert isinstance(title_region, BaseWidgetRegion)
     assert isinstance(name_region, BaseWidgetRegion)
+
+
+def test_mixed_page_region(browser):
+    """ Test mixed/nested page and region """
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class SubFormPage(BaseFormPage):
+        schema_factory = SubFormSchema
+
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+    region = SubFormRegion(SubFormPage(browser))
+
+    assert region.getWidgetRegion('title') != \
+        region.page.getWidgetRegion('title')
+    assert region.getWidgetRegion('name') != \
+        region.page.getWidgetRegion('name')
