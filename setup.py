@@ -8,7 +8,7 @@ install_requires = [
     'tox',
     'pytest-cov',
     'mock',
-    'PyPOM[splinter]>=1.1.0',
+    'PyPOM[splinter]>=1.1.1',
     'colander',
 ]
 

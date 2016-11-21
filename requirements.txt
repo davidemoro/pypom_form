@@ -1,7 +1,7 @@
 Babel==2.3.4
 Jinja2==2.8
 MarkupSafe==0.23
--e git+https://github.com/mozilla/PyPOM.git#egg=PyPOM
+PyPOM[splinter]==1.1.1
 Pygments==2.1.3
 Sphinx==1.4.8
 alabaster==0.7.9
