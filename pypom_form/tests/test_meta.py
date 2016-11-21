@@ -196,7 +196,7 @@ def test_pypom_inner_attribute_standard_page(browser):
     assert subform.__pypom__
     assert 'title' in subform.__pypom__
     assert 'name' in subform.__pypom__
-    assert subform.__pypom__.keys() == ['title', 'name']
+    assert list(subform.__pypom__.keys()) == ['title', 'name']
     assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
     assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
 
@@ -230,7 +230,7 @@ def test_pypom_inner_attribute_form_page(browser):
     assert subform.__pypom__
     assert 'title' in subform.__pypom__
     assert 'name' in subform.__pypom__
-    assert subform.__pypom__.keys() == ['title', 'name']
+    assert list(subform.__pypom__.keys()) == ['title', 'name']
     assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
     assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
 
@@ -266,7 +266,7 @@ def test_pypom_inner_attribute_standard_region(browser):
     assert subform.__pypom__
     assert 'title' in subform.__pypom__
     assert 'name' in subform.__pypom__
-    assert subform.__pypom__.keys() == ['title', 'name']
+    assert list(subform.__pypom__.keys()) == ['title', 'name']
     assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
     assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
 
