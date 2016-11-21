@@ -1,47 +1,5 @@
 
 
-def test_meta_standard_page(browser):
-    """ test metaclass with standard pypom.Page"""
-    import colander
-
-    from pypom_form.widgets import StringWidget
-
-    class MyStringWidget(StringWidget):
-        pass
-
-    class BaseFormSchema(colander.MappingSchema):
-        title = colander.SchemaNode(colander.String(),
-                                    selector=('id', 'id1'))
-
-    class SubFormSchema(BaseFormSchema):
-        name = colander.SchemaNode(colander.String(),
-                                   selector=('id', 'id2'),
-                                   pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
-
-    import pypom
-    from pypom_form.meta import PyPOMFormMetaclass
-
-    class SubFormPage(pypom.Page):
-        __metaclass__ = PyPOMFormMetaclass
-        schema_factory = SubFormSchema
-
-    subform = SubFormPage(browser)
-    import mock
-
-    with mock.patch(
-            'pypom_form.widgets.StringWidget.get_input_element') \
-            as get_input_element:
-        get_input_element.configure_mock(**{'return_value.value': 'the title'})
-        assert subform.title == 'the title'
-
-    with mock.patch(
-            'pypom_form.widgets.StringWidget.get_input_element') \
-            as get_input_element:
-        get_input_element.configure_mock(**{'return_value.value': 'the name'})
-        assert subform.name == 'the name'
-
-
 def test_meta_form_page(browser):
     """ test metaclass with pypom form page"""
     import colander
@@ -67,48 +25,6 @@ def test_meta_form_page(browser):
         schema_factory = SubFormSchema
 
     subform = SubFormPage(browser)
-    import mock
-
-    with mock.patch(
-            'pypom_form.widgets.StringWidget.get_input_element') \
-            as get_input_element:
-        get_input_element.configure_mock(**{'return_value.value': 'the title'})
-        assert subform.title == 'the title'
-
-    with mock.patch(
-            'pypom_form.widgets.StringWidget.get_input_element') \
-            as get_input_element:
-        get_input_element.configure_mock(**{'return_value.value': 'the name'})
-        assert subform.name == 'the name'
-
-
-def test_meta_standard_region(browser):
-    """ test metaclass with standard pypom.Region"""
-    import colander
-
-    from pypom_form.widgets import StringWidget
-
-    class MyStringWidget(StringWidget):
-        pass
-
-    class BaseFormSchema(colander.MappingSchema):
-        title = colander.SchemaNode(colander.String(),
-                                    selector=('id', 'id1'))
-
-    class SubFormSchema(BaseFormSchema):
-        name = colander.SchemaNode(colander.String(),
-                                   selector=('id', 'id2'),
-                                   pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
-
-    import pypom
-    from pypom_form.meta import PyPOMFormMetaclass
-
-    class SubFormRegion(pypom.Region):
-        __metaclass__ = PyPOMFormMetaclass
-        schema_factory = SubFormSchema
-
-    subform = SubFormRegion(pypom.Page(browser))
     import mock
 
     with mock.patch(
@@ -165,42 +81,6 @@ def test_meta_form_region(browser):
         assert subform.name == 'the name'
 
 
-def test_pypom_inner_attribute_standard_page(browser):
-    """ test pypom inner attribute """
-    import colander
-
-    from pypom_form.widgets import StringWidget
-
-    class MyStringWidget(StringWidget):
-        pass
-
-    class BaseFormSchema(colander.MappingSchema):
-        title = colander.SchemaNode(colander.String(),
-                                    selector=('id', 'id1'))
-
-    class SubFormSchema(BaseFormSchema):
-        name = colander.SchemaNode(colander.String(),
-                                   selector=('id', 'id2'),
-                                   pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
-
-    import pypom
-    from pypom_form.meta import PyPOMFormMetaclass
-
-    class SubFormPage(pypom.Page):
-        __metaclass__ = PyPOMFormMetaclass
-        schema_factory = SubFormSchema
-
-    subform = SubFormPage(browser)
-
-    assert subform.__pypom__
-    assert 'title' in subform.__pypom__
-    assert 'name' in subform.__pypom__
-    assert list(subform.__pypom__.keys()) == ['title', 'name']
-    assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
-    assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
-
-
 def test_pypom_inner_attribute_form_page(browser):
     """ test pypom inner attribute """
     import colander
@@ -226,42 +106,6 @@ def test_pypom_inner_attribute_form_page(browser):
         schema_factory = SubFormSchema
 
     subform = SubFormPage(browser)
-
-    assert subform.__pypom__
-    assert 'title' in subform.__pypom__
-    assert 'name' in subform.__pypom__
-    assert list(subform.__pypom__.keys()) == ['title', 'name']
-    assert isinstance(subform.__pypom__['title'], colander.SchemaNode)
-    assert isinstance(subform.__pypom__['name'], colander.SchemaNode)
-
-
-def test_pypom_inner_attribute_standard_region(browser):
-    """ test pypom inner attribute """
-    import colander
-
-    from pypom_form.widgets import StringWidget
-
-    class MyStringWidget(StringWidget):
-        pass
-
-    class BaseFormSchema(colander.MappingSchema):
-        title = colander.SchemaNode(colander.String(),
-                                    selector=('id', 'id1'))
-
-    class SubFormSchema(BaseFormSchema):
-        name = colander.SchemaNode(colander.String(),
-                                   selector=('id', 'id2'),
-                                   pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
-
-    import pypom
-    from pypom_form.meta import PyPOMFormMetaclass
-
-    class SubFormRegion(pypom.Region):
-        __metaclass__ = PyPOMFormMetaclass
-        schema_factory = SubFormSchema
-
-    subform = SubFormRegion(pypom.Page(browser))
 
     assert subform.__pypom__
     assert 'title' in subform.__pypom__

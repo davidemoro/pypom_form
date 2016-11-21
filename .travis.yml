@@ -3,9 +3,11 @@ sudo: required
 
 python:
   - "2.7"
+  - "3.5"
 
 env:
   - TOXENV=py27
+  - TOXENV=py35
   - TOXENV=docs
   - TOXENV=linkcheck
   - TOXENV=codecov
