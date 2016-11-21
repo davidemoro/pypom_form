@@ -26,6 +26,8 @@ setup(name='pypom_form',
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3.5",
           "Framework :: Pytest",
           "Topic :: Software Development :: Testing",
           "License :: OSI Approved :: Apache Software License",
