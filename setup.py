@@ -4,12 +4,14 @@ version = '0.0.1dev'
 
 
 install_requires = [
-    'pytest-splinter',
+    'PyPOM[splinter]>=1.1.1',
+    'colander',
+]
+
+tests_require = [
     'tox',
     'pytest-cov',
     'mock',
-    'PyPOM[splinter]>=1.1.1',
-    'colander',
 ]
 
 docs_require = [
@@ -47,5 +49,6 @@ setup(name='pypom_form',
       """,
       extras_require={
           'docs': docs_require,
+          'tests': tests_require,
           },
       )
