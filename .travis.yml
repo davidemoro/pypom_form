@@ -2,10 +2,10 @@ language: python
 sudo: required 
 
 python:
-  - "2.7"
+  - 2.7
+  - 3.5
 
 env:
-  - TOXENV=py27
   - TOXENV=docs
   - TOXENV=linkcheck
   - TOXENV=codecov
