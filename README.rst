@@ -133,6 +133,12 @@ In addition:
 Code samples
 ============
 
+The following code samples assumes that there is a navigation fixture providing the page instance
+built with a Splinter driver but you can build by yourself a page instance following
+the PyPOM documentation:
+
+* http://pypom.readthedocs.io/en/latest/
+
 Schema definition::
 
     import colander
