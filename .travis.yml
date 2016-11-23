@@ -11,6 +11,10 @@ env:
   - TOXENV=codecov
   - TOXENV=pycodestyle
 
+matrix:
+  allow_failures:
+  - env: TOXENV=linkcheck
+
 before_install:
   - sudo apt-get -qq update
   
