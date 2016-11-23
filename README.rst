@@ -29,6 +29,11 @@ you should be already familiar with this pattern: you simply define a model with
 interact with your model saving or retrieving data.
 Same happens with pypom_form where the model is the page.
 
+pypom_form it is internally based on:
+
+* `PyPOM`_
+* `colander`_
+
 How does it work?
 =================
 
@@ -125,12 +130,79 @@ In addition:
 * supports both Selenium (not yet implemented) or Splinter drivers
 * pytest setup ready thanks to ``pytest.selenium`` or ``pytest.splinter``
 
+Code samples
+============
 
-It is internally based on:
+Schema definition::
 
-* `PyPOM`_
-* `colander`_
+    import colander
+    
+    from pypom_form.form import BaseFormPage
+    
+    
+    class BaseEditSchema(colander.MappingSchema):
+        """ This is the base edit mapping common for all pages """
+    
+        name = colander.SchemaNode(
+            colander.String(),
+            selector=('id', 'name-widget'),
+        )
+    
+    
+    class BaseEditPage(BaseFormPage):
+        """ This is the base edit class """
+    
+        schema_factory = BaseEditSchema
 
+And assuming you have a page instance you can interact with the above page
+just setting an attribute::
+
+    @pytest_bdd.when(pytest_bdd.parsers.parse(
+        'I set {name} as name field'))
+    def fill_name(navigation, name):
+        page = navigation.page
+        page.name = name
+
+You can also define other pages with extended schema, for example an integer
+type::
+
+    class AnotherPageEditSchema(BaseEditSchema):
+    
+        duration = colander.SchemaNode(
+            colander.Int(),
+            missing=0,
+            selector=('id',
+                      'duration-widget'),
+            validator=colander.Range(0, 9999))
+
+but you can create also field types like ``colander.Bool`` or any other colander
+supported types.
+
+And the test::
+
+    @pytest_bdd.when(pytest_bdd.parsers.cfparse(
+        'I set {duration:Number} as Alarm duration',
+        extra_types=dict(Number=int)))
+    def fill_alarm_duration(navigation, duration):
+        page = navigation.page
+        page.duration = duration
+
+You might notice that in the above example you are setting an integer duration
+and not a string. So you can perform ``page.duration += 10`` for example. 
+
+You can also define custom widgets on fields if the default implementation does
+not match the one available on your application (for example a non standard
+checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``::
+
+    mybool = colander.SchemaNode(
+        colander.Bool(),
+        missing=False,
+        selector=(
+            'id',
+            'mybool-widget'
+        ),
+        pypom_widget=MyBoolWidget()
+    )
 
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
