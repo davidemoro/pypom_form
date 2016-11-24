@@ -281,7 +281,13 @@ def test_region_widget_not_implemented(browser):
     subform = SubFormPage(browser)
 
     from pypom_form.widgets import BaseWidgetRegion
-    widget_region = BaseWidgetRegion(subform)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        widget_region = BaseWidgetRegion(subform)
 
     with pytest.raises(NotImplementedError):
         widget_region.get_help()
@@ -316,7 +322,13 @@ def test_region_widget_get_label(browser):
     subform = SubFormPage(browser)
 
     from pypom_form.widgets import BaseWidgetRegion
-    widget_region = BaseWidgetRegion(subform)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        widget_region = BaseWidgetRegion(subform)
 
     widget_region.find_element = mock.MagicMock(**{
         'return_value.value': 'title'})
@@ -379,7 +391,12 @@ def test_widget_region_root_selector(browser):
     import pypom
     page = pypom.Page(browser)
 
-    assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
 
 
 def test_get_input_element(browser):
