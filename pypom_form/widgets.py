@@ -36,7 +36,8 @@ class BaseWidgetRegion(BaseFormRegion):
 
     def wait_for_region_to_load(self):
         """Wait for the page region to load."""
-        self.wait.until(lambda s: self.root.visible)
+        if self.root is not None:
+            self.wait.until(lambda s: self.root.visible)
 
 
 class BaseWidget(object):
