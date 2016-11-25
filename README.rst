@@ -118,8 +118,8 @@ plain page object model pattern but with pypom_form you have the following advan
 * same user experience if you are already familiar with schema declarative models like ``SQLAlchemy``,
   ``Archetypes`` (Plone), ``Dexterity`` (Plone) or form libraries like ``deform``
 * since widget implementation is based on regions, you can simply perform a ``page.name = "the name"``
-  on page load instead of having to call a wait method: the widget is able to wait for the widget load
-  before getting or setting data (not yet implemented)
+  on page load instead of having to call a wait method before setting the value:
+  the widget is able to wait for the widget load before getting or setting data
 * page objects classes more simple, with less code, more standard even if different test engineers will
   implement page form logics: there is a structural pattern
 
