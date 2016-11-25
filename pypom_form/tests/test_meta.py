@@ -174,12 +174,20 @@ def test_meta_form_page_widget_region(browser):
         schema_factory = SubFormSchema
 
     subform = SubFormPage(browser)
-    title_region = subform.getWidgetRegion('title')
-    name_region = subform.getWidgetRegion('name')
 
-    from pypom_form.widgets import BaseWidgetRegion
-    assert isinstance(title_region, BaseWidgetRegion)
-    assert isinstance(name_region, BaseWidgetRegion)
+    import mock
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        title_region = subform.getWidgetRegion('title')
+        name_region = subform.getWidgetRegion('name')
+
+        from pypom_form.widgets import BaseWidgetRegion
+        assert isinstance(title_region, BaseWidgetRegion)
+        assert isinstance(name_region, BaseWidgetRegion)
 
 
 def test_meta_form_region_widget_region(browser):
@@ -208,12 +216,20 @@ def test_meta_form_region_widget_region(browser):
         schema_factory = SubFormSchema
 
     subform = SubFormRegion(pypom.Page(browser))
-    title_region = subform.getWidgetRegion('title')
-    name_region = subform.getWidgetRegion('name')
 
-    from pypom_form.widgets import BaseWidgetRegion
-    assert isinstance(title_region, BaseWidgetRegion)
-    assert isinstance(name_region, BaseWidgetRegion)
+    import mock
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        title_region = subform.getWidgetRegion('title')
+        name_region = subform.getWidgetRegion('name')
+
+        from pypom_form.widgets import BaseWidgetRegion
+        assert isinstance(title_region, BaseWidgetRegion)
+        assert isinstance(name_region, BaseWidgetRegion)
 
 
 def test_mixed_page_region(browser):
@@ -247,10 +263,17 @@ def test_mixed_page_region(browser):
 
     region = SubFormRegion(SubFormPage(browser))
 
-    assert region.getWidgetRegion('title') != \
-        region.page.getWidgetRegion('title')
-    assert region.getWidgetRegion('name') != \
-        region.page.getWidgetRegion('name')
+    import mock
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert region.getWidgetRegion('title') != \
+            region.page.getWidgetRegion('title')
+        assert region.getWidgetRegion('name') != \
+            region.page.getWidgetRegion('name')
 
 
 def test_mixed_page_region_page_reference(browser):
@@ -286,7 +309,15 @@ def test_mixed_page_region_page_reference(browser):
     region = SubFormRegion(page)
 
     assert region.page == page
-    assert region.getWidgetRegion('title').page == \
-        region
-    assert page.getWidgetRegion('title').page == \
-        page
+
+    import mock
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert region.getWidgetRegion('title').page == \
+            region
+        assert page.getWidgetRegion('title').page == \
+            page

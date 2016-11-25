@@ -34,6 +34,11 @@ class BaseWidgetRegion(BaseFormRegion):
         """ Return the widget validation error """
         raise NotImplementedError
 
+    def wait_for_region_to_load(self):
+        """Wait for the page region to load."""
+        if self.root is not None:
+            self.wait.until(lambda s: self.root.visible)
+
 
 class BaseWidget(object):
     """ This is the base widget. It is not intended to be used itself

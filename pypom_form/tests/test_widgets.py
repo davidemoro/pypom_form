@@ -281,7 +281,13 @@ def test_region_widget_not_implemented(browser):
     subform = SubFormPage(browser)
 
     from pypom_form.widgets import BaseWidgetRegion
-    widget_region = BaseWidgetRegion(subform)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        widget_region = BaseWidgetRegion(subform)
 
     with pytest.raises(NotImplementedError):
         widget_region.get_help()
@@ -316,7 +322,13 @@ def test_region_widget_get_label(browser):
     subform = SubFormPage(browser)
 
     from pypom_form.widgets import BaseWidgetRegion
-    widget_region = BaseWidgetRegion(subform)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        widget_region = BaseWidgetRegion(subform)
 
     widget_region.find_element = mock.MagicMock(**{
         'return_value.value': 'title'})
@@ -379,7 +391,12 @@ def test_widget_region_root_selector(browser):
     import pypom
     page = pypom.Page(browser)
 
-    assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
 
 
 def test_get_input_element(browser):
@@ -403,3 +420,77 @@ def test_get_input_element_no_container(browser):
     import pypom
     page = pypom.Page(browser)
     widget.get_input_element(page) == 'root'
+
+
+def test_widget_region_wait_timeout(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class SubFormPage(BaseFormPage):
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+    subform.timeout = 0
+
+    from pypom_form.widgets import BaseWidgetRegion
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.root') \
+            as root:
+        root.configure_mock(**{'visible': False})
+
+        from selenium.common.exceptions import TimeoutException
+        with pytest.raises(TimeoutException):
+            BaseWidgetRegion(subform)
+
+
+def test_widget_region_wait_not_timeout(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pwidget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class SubFormPage(BaseFormPage):
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+    subform.timeout = 0
+
+    from pypom_form.widgets import BaseWidgetRegion
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.root') \
+            as root:
+        root.configure_mock(**{'visible': True})
+
+        BaseWidgetRegion(subform)
