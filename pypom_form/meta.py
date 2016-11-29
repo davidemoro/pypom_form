@@ -25,6 +25,12 @@ def _getWidgetRegion(self, name):
     return self.__pypom__[name].pypom_widget.getWidgetRegion(self)
 
 
+def _set(self, name, value):
+    """ Set value for the given name with chained calls support """
+    setattr(self, name, value)
+    return self
+
+
 class PyPOMFormMetaclass(type):
     """ This is the metaclass that empower the page or region
         form with dynamically generated getter and setter
@@ -45,6 +51,7 @@ class PyPOMFormMetaclass(type):
         if schema_factory:
             dct['__pypom__'] = OrderedDict()
             dct['getWidgetRegion'] = _getWidgetRegion
+            dct['set'] = _set
 
             schema = schema_factory()
             WIDGETS_MAPPING = _widgets_mapping()

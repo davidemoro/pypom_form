@@ -321,3 +321,38 @@ def test_mixed_page_region_page_reference(browser):
             region
         assert page.getWidgetRegion('title').page == \
             page
+
+
+def test_meta_set(browser):
+    """ test metaclass with pypom form region"""
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pypom_widget=MyStringWidget(
+                                       kwargs={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.title.fset)
+    mock_property = subform.__class__.title.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'title', mock_property):
+        assert subform.set('title', 'the title') == subform
+        setter_mock.assert_called_once_with(subform, 'the title')
