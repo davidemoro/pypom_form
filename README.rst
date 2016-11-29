@@ -213,9 +213,11 @@ checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``::
         pypom_widget=MyBoolWidget()
     )
 
-Also chained calls are supported::
+Also chained calls are supported (eg: set the title, perform the pretend submit method
+and then set a boolean)::
 
     page.set('title', 'the title'). \
+        .submit(). \
         .set('mybool', False)
 
 or bulk updates. All changes occurs following the fields order at schema level::
