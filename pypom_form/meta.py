@@ -31,6 +31,28 @@ def _set(self, name, value):
     return self
 
 
+def _update(self, **values):
+    """ Bulk page update with chained calls support.
+        Updates fields considering the PyPOM fields order in order
+        to support edit forms with fields that depends on other
+        fields.
+    """
+    value_keys = values.keys()
+    pypom_keys = self.__pypom__.keys()
+
+    if not set(value_keys) <= set(pypom_keys):
+        raise KeyError
+
+    # values must be a subset of the available declared fields
+    for key in pypom_keys:
+        # set values with the specific order matching with the
+        # schema definition
+        if key in value_keys:
+            self.set(key, values[key])
+
+    return self
+
+
 class PyPOMFormMetaclass(type):
     """ This is the metaclass that empower the page or region
         form with dynamically generated getter and setter
@@ -52,6 +74,7 @@ class PyPOMFormMetaclass(type):
             dct['__pypom__'] = OrderedDict()
             dct['getWidgetRegion'] = _getWidgetRegion
             dct['set'] = _set
+            dct['update'] = _update
 
             schema = schema_factory()
             WIDGETS_MAPPING = _widgets_mapping()
