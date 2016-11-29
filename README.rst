@@ -91,6 +91,7 @@ Why pypom_form
 Obviously you can drive your browser in automated tests with plain selenium/splinter or with a traditional
 plain page object model pattern but with pypom_form you have the following advantages:
 
+* write once and reusable approach, very useful if you are testing CMS framework
 * separation of concerns for page and widget logics
 * declarative schema approach
 * reusable schema and widgets, no code repetition
