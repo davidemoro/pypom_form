@@ -113,6 +113,7 @@ plain page object model pattern but with pypom_form you have the following advan
 * interact with your model with applicative domain data instead of browser domain data. It is more
   simple and easy to manage Python data (for example you set 12.9 instead of '12.9', same for datetimes
   values like ``datetime.now()``)
+* supports chained calls
 * don't reinvent the wheel. It is based on existing and widely used components like the plain PyPOM or
   Colander libraries
 * same user experience if you are already familiar with schema declarative models like ``SQLAlchemy``,
@@ -209,6 +210,12 @@ checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``::
         ),
         pypom_widget=MyBoolWidget()
     )
+
+Also chained calls are supported::
+
+    page.set('title', 'the title'). \
+        .set('mybool', False)
+
 
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
