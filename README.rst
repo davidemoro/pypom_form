@@ -99,6 +99,7 @@ plain page object model pattern but with pypom_form you have the following advan
 * simple API based on auto generated getter and setters
 * interact with advanced widget logics thanks to PyPOM based region widgets
 * widget isolation. All element queries run against the root region, not the page root
+* simpler input elements selectors, they are relative to the region widget root
 * schema forms improves how you document page containing forms (attributes names, type, widgets,
   allowed vocabularies, etc). All you need to know is defined at schema level with the whole picture
   available at a glance
