@@ -225,6 +225,28 @@ or bulk updates. All changes occurs following the fields order at schema level::
 
     page.update(**{'title': 'the title', 'mybool': True})
 
+The ``update`` or ``raw_update`` can be used in test preconditions creation.
+Assuming you have a generic given step with parametrized with a complex configuration
+you can pass the raw json data and the ``raw_update`` will take care about the
+data conversion from browser model (eg: string) to the page model (strings, integers,
+datetimes, etc)::
+
+    @pytest_bdd.given(pytest_bdd.parsers.cfparse(
+        'I have a CAN bus protocol configured with:\n{raw_conf:json}',
+        extra_types=dict(json=json.loads)))
+    def create_can_protocol(navigation, base_url, raw_conf):
+        """ create a can protocol
+        """
+
+        navigation. \
+            visit_page('CANBusProtocolsPage'). \
+            wait_for_full_spinner(). \
+            click_add(). \
+            raw_update(**raw_conf). \
+            save(). \
+            wait_for_success_pop_up_appears(). \
+            click_on_ok_pop_up()
+
 
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
