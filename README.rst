@@ -247,6 +247,19 @@ datetimes, etc)::
             wait_for_success_pop_up_appears(). \
             click_on_ok_pop_up()
 
+assuming that the ``raw_conf`` is specified in json format in
+the ``.feature`` file, for example::
+
+    @UI @edit @CANBusParameter
+    Scenario: Add a CAN bus parameter
+      Given I am logged in as Administrator
+      And I have a CAN bus protocol configured with:
+          {"name": "The name",
+           "baudrate": "250",
+           ...
+          }
+      And ...
+
 
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
