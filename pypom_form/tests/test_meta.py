@@ -393,3 +393,41 @@ def test_meta_update(browser):
 
         with pytest.raises(KeyError):
             subform.update(**{'another': 'another'})
+
+
+def test_meta_raw_update(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    missing='',
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        age = colander.SchemaNode(colander.Int(),
+                                  selector=('id', 'id2'),
+                                  pypom_widget=MyStringWidget(
+                                      kwargs={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.title.fset)
+    mock_property = subform.__class__.title.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'age', mock_property):
+        assert subform.raw_update(**{'age': '12'}) == subform
+        setter_mock.assert_called_once_with(subform, 12)
+
+        with pytest.raises(KeyError):
+            subform.update(**{'another': 'another'})

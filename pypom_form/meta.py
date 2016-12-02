@@ -53,6 +53,18 @@ def _update(self, **values):
     return self
 
 
+def _raw_update(self, **raw_values):
+    """ Bulk page update with chained calls support.
+        Updates fields with raw values (not deserialized)
+        considering the PyPOM fields order in order
+        to support edit forms with fields that depends on other
+        fields.
+    """
+    schema = self.schema_factory()
+    values = schema.deserialize(raw_values)
+    return self.update(**values)
+
+
 class PyPOMFormMetaclass(type):
     """ This is the metaclass that empower the page or region
         form with dynamically generated getter and setter
@@ -75,6 +87,7 @@ class PyPOMFormMetaclass(type):
             dct['getWidgetRegion'] = _getWidgetRegion
             dct['set'] = _set
             dct['update'] = _update
+            dct['raw_update'] = _raw_update
 
             schema = schema_factory()
             WIDGETS_MAPPING = _widgets_mapping()
