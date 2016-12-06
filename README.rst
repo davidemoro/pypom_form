@@ -24,7 +24,7 @@ pypom_form
 pypom_form aims to improve the developer experience for UI, E2E test automation when you
 have to interact with page object containing forms thanks to declarative schema models.
 
-If you come from past experience with frameworks like SQLAlchemy, Dexterity (Plone) or the old Archetypes (Plone)
+If you come from past experience with frameworks like `SQLAlchemy`_, Dexterity (`Plone`_) or the old Archetypes (`Plone`_)
 you should be already familiar with this pattern: you simply define a model with a schema and you will be able to
 interact with your model saving or retrieving data.
 Same happens with pypom_form where the model is the page.
@@ -105,7 +105,7 @@ plain page object model pattern but with pypom_form you have the following advan
   allowed vocabularies, etc). All you need to know is defined at schema level with the whole picture
   available at a glance
 * reuse of existing schemas if you are going to test a colander/deform based application (probably
-  you are testing a Pylons/Pyramid Python based web application)
+  you are testing a Pylons `Pyramid`_ Python based web application)
 * page and schema inheritance supported as well
 * easy test multi skin web applications with same data model, same or different selectors or widget
   types. So you can reuse all your page object classes as they are defined, it changes only the schema
@@ -270,3 +270,6 @@ you can override them.
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
 .. _Splinter: https://splinter.readthedocs.io/en/latest/
+.. _Plone: https://plone.org/
+.. _SQLAlchemy: http://www.sqlalchemy.org/
+.. _Pyramid: https://trypyramid.com/
