@@ -33,6 +33,7 @@ pypom_form it is internally based on:
 
 * `PyPOM`_
 * `colander`_
+* `Splinter`_
 
 How does it work?
 =================
@@ -260,6 +261,12 @@ the ``.feature`` file, for example::
           }
       And ...
 
+As you can see in the above code examples there is no need to perform wait calls before
+interacting with a form on page load because each widget is able to wait until its
+controlled input element is ready. Wait logics are already defined on widget level and
+you can override them.
+
 
 .. _PyPOM: http://pypom.readthedocs.io
 .. _colander: http://docs.pylonsproject.org/projects/colander/en/latest/
+.. _Splinter: https://splinter.readthedocs.io/en/latest/
