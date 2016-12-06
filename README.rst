@@ -131,8 +131,8 @@ In addition:
 
 * 100% test coverage
 * both Python 2 and 3 support
-* supports both Selenium (not yet implemented) or Splinter drivers
-* pytest setup ready thanks to ``pytest.selenium`` or ``pytest.splinter``
+* supports Splinter drivers (Selenium support not yet available)
+* pytest setup ready thanks to ``pytest-splinter``
 
 Code samples
 ============
