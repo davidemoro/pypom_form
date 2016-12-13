@@ -16,7 +16,10 @@ pypom_form
 
 .. image:: https://api.codacy.com/project/badge/Grade/0698c7aa2e164ee996518737aad7d6f4
        :target: https://www.codacy.com/app/davide-moro/pypom_form?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tierratelematics/pypom_form&amp;utm_campaign=Badge_Grade
-
+       
+.. image:: https://pyup.io/repos/github/tierratelematics/pypom_form/python-3-shield.svg
+     :target: https://pyup.io/repos/github/tierratelematics/pypom_form/
+     :alt: Python 3
 
 
 ``pypom_form`` is a PyPOM based package that provides declarative schema based form interaction for page objects.
