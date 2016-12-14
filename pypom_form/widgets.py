@@ -128,16 +128,16 @@ class StringWidget(BaseWidget):
     input_selector = ('tag', 'input')
 
     def getter_factory(self):
-        def _getter(fself):
-            element = self.get_input_element(fself)
+        def _getter(page):
+            element = self.get_input_element(page)
             value = element.value
             return self.field.deserialize(value)
         return _getter
 
     def setter_factory(self):
-        def _setter(fself, value):
+        def _setter(page, value):
             value = self.field.serialize(value)
-            element = self.get_input_element(fself)
+            element = self.get_input_element(page)
             element.fill(value)
         return _setter
 
@@ -148,15 +148,15 @@ class CheckboxWidget(BaseWidget):
     input_selector = ('css', 'input[type="checkbox"]')
 
     def getter_factory(self):
-        def _getter(fself):
-            element = self.get_input_element(fself)
+        def _getter(page):
+            element = self.get_input_element(page)
             value = element.checked
             return self.field.deserialize(value)
         return _getter
 
     def setter_factory(self):
-        def _setter(fself, value):
-            element = self.get_input_element(fself)
+        def _setter(page, value):
+            element = self.get_input_element(page)
             if value:
                 element.check()
             else:
