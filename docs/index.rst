@@ -12,6 +12,7 @@ Index
     :maxdepth: 2
 
     pypom_form <README>
+    Advanced <advanced>
     API <api>
     Contributors <contributors>
     Changelog <changes>
