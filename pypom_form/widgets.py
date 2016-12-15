@@ -55,11 +55,11 @@ class BaseWidget(object):
 
     region_class = BaseWidgetRegion
 
-    def __init__(self, field=None, region_class=None, kwargs={}):
+    def __init__(self, field=None, region_class=None, options={}):
         self.field = field
         if region_class is not None:
             self.region_class = region_class
-        self.kwargs = kwargs
+        self.options = options
 
     @property
     def input_selector(self):

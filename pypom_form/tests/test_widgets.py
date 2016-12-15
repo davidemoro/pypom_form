@@ -11,11 +11,11 @@ def test_base_widget_1():
 
 
 def test_base_widget_2():
-    """ Assert kwargs are stored """
+    """ Assert options are stored """
     from pypom_form.widgets import BaseWidget
 
-    widget = BaseWidget(kwargs={'test': 1})
-    assert widget.kwargs['test'] == 1
+    widget = BaseWidget(options={'test': 1})
+    assert widget.options['test'] == 1
 
 
 def test_base_widget_3():
@@ -271,7 +271,7 @@ def test_region_widget_not_implemented(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pwidget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -312,7 +312,7 @@ def test_region_widget_get_label(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pwidget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -438,7 +438,7 @@ def test_widget_region_wait_timeout(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pwidget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -476,7 +476,7 @@ def test_widget_region_wait_not_timeout(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pwidget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 

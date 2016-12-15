@@ -18,7 +18,7 @@ def test_meta_form_page(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -58,7 +58,7 @@ def test_meta_form_region(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     import pypom
     from pypom_form.form import BaseFormRegion
@@ -99,7 +99,7 @@ def test_pypom_inner_attribute_form_page(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -133,7 +133,7 @@ def test_pypom_inner_attribute_form_region(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -167,7 +167,7 @@ def test_meta_form_page_widget_region(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -208,7 +208,7 @@ def test_meta_form_region_widget_region(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     import pypom
     from pypom_form.form import BaseFormRegion
@@ -250,7 +250,7 @@ def test_mixed_page_region(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -294,7 +294,7 @@ def test_mixed_page_region_page_reference(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     from pypom_form.form import BaseFormPage
 
@@ -340,7 +340,7 @@ def test_meta_set(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     import pypom
     from pypom_form.form import BaseFormRegion
@@ -374,7 +374,7 @@ def test_meta_update(browser):
         name = colander.SchemaNode(colander.String(),
                                    selector=('id', 'id2'),
                                    pypom_widget=MyStringWidget(
-                                       kwargs={'test': 1}))
+                                       options={'test': 1}))
 
     import pypom
     from pypom_form.form import BaseFormRegion
@@ -412,7 +412,7 @@ def test_meta_raw_update(browser):
         age = colander.SchemaNode(colander.Int(),
                                   selector=('id', 'id2'),
                                   pypom_widget=MyStringWidget(
-                                      kwargs={'test': 1}))
+                                      options={'test': 1}))
 
     import pypom
     from pypom_form.form import BaseFormRegion
