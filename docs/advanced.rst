@@ -256,7 +256,7 @@ just with::
 So thanks to ``pypom_form`` widgets you can deal with rich UI widgets hiding the complexity
 making things easy for a great development and testing experience.
 
-New colander types
+Extending Colander
 ------------------
 
 We won't cover how to add your own custom colander types or validators, instead
