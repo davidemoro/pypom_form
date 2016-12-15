@@ -226,6 +226,35 @@ Let's see the resulting code::
                 reg.update(**value)
             return _setter
 
+Now you have a dictionary like edit widget reusable across different page objects sharing
+the same data structures powered by regions and subregions. The widget interaction on page
+objects empowered by ``pypom_form`` widgets is as easy as dealing with a Python dictionary.
+
+For example you might have a ``I set the encoded values field with:`` BDD statement like the
+following one::
+
+    @UI @edit @CANBusFamily @encoded
+    Scenario: Add a CAN bus family encoded
+      Given I am logged in as Administrator
+      And I am on the CANBusFamiliesPage page
+      When I click on the Add button
+      And I fill in the name of the form
+      And I set the encoded values field with:
+          {"0": "zero", "1": "one"}
+      And I submit the form
+      Then a success popup message appears
+
+just with::
+
+    @pytest_bdd.when(pytest_bdd.parsers.cfparse(
+        'I set the encoded values field with:\n{encoded_values:json}',
+        extra_types=dict(json=json.loads)))
+    def set_encoded_values(navigation, encoded_values):
+        """ Set encoded values """
+        navigation.page.encoded_values = encoded_values
+
+So thanks to ``pypom_form`` widgets you can deal with rich UI widgets hiding the complexity
+making things easy for a great development and testing experience.
 
 New colander types
 ------------------
