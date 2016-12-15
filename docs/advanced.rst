@@ -31,6 +31,16 @@ widget ``EncodedValuesWidget``::
     
         schema_factory = MyEditPageSchema
 
+On the page instance you can simply set the values you want to apply in one shot::
+
+    page.encoded_values = {'company1': 'Company ONE', 'company2': 'Company TWO'}
+    ...
+
+or interact step by step thanks to the widget region::
+
+    page.getWidgetRegion('encoded_values').click_add()
+    ...
+
 And now let's see our pretend custom widget implementation. The widget itself is based on:
 
 * a widget ``EncodedValuesWidget``, it will let you interact with the input elements if you want
