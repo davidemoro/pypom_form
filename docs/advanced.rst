@@ -8,7 +8,50 @@ Encoded values widget
 ---------------------
 
 Let's pretend we have to manage a simple key-value widget:
-a sort of dictionary like structure where both keys and values are string types.
+a sort of dictionary like structure where both keys and values are string types like shown
+in the following picture.
+
+  .. image:: images/encoded-values.png
+
+
+Final interaction with the widget
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For example you might have a ``I set the encoded values field with:`` BDD statement like the
+following one::
+
+    @UI @edit @CANBusFamily @encoded
+    Scenario: Add a CAN bus family encoded
+      Given I am logged in as Administrator
+      And I am on the CANBusFamiliesPage page
+      When I click on the Add button
+      And I fill in the name of the form
+      And I set the encoded values field with:
+          {"0": "zero", "1": "one"}
+      And I submit the form
+      Then a success popup message appears
+
+implemented just with::
+
+    @pytest_bdd.when(pytest_bdd.parsers.cfparse(
+        'I set the encoded values field with:\n{encoded_values:json}',
+        extra_types=dict(json=json.loads)))
+    def set_encoded_values(navigation, encoded_values):
+        """ Set encoded values """
+        navigation.page.encoded_values = encoded_values
+
+On the page instance you can simply set the values you want to apply in one shot::
+
+    page.encoded_values = {'company1': 'Company ONE', 'company2': 'Company TWO'}
+    ...
+
+or interact step by step thanks to the widget region::
+
+    page.getWidgetRegion('encoded_values').click_add()
+    ...
+
+Final page form setup configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can add a new row, delete a row, add a key and a value for each row. If you want you
 can also create some validators and contraints to your values.
@@ -31,15 +74,9 @@ widget ``EncodedValuesWidget``::
     
         schema_factory = MyEditPageSchema
 
-On the page instance you can simply set the values you want to apply in one shot::
 
-    page.encoded_values = {'company1': 'Company ONE', 'company2': 'Company TWO'}
-    ...
-
-or interact step by step thanks to the widget region::
-
-    page.getWidgetRegion('encoded_values').click_add()
-    ...
+Widget implementation
+~~~~~~~~~~~~~~~~~~~~~
 
 And now let's see our pretend custom widget implementation. The widget itself is based on:
 
@@ -226,32 +263,14 @@ Let's see the resulting code::
                 reg.update(**value)
             return _setter
 
+
+Final considerations
+~~~~~~~~~~~~~~~~~~~~
+
 Now you have a dictionary like edit widget reusable across different page objects sharing
 the same data structures powered by regions and subregions. The widget interaction on page
-objects empowered by ``pypom_form`` widgets is as easy as dealing with a Python dictionary.
-
-For example you might have a ``I set the encoded values field with:`` BDD statement like the
-following one::
-
-    @UI @edit @CANBusFamily @encoded
-    Scenario: Add a CAN bus family encoded
-      Given I am logged in as Administrator
-      And I am on the CANBusFamiliesPage page
-      When I click on the Add button
-      And I fill in the name of the form
-      And I set the encoded values field with:
-          {"0": "zero", "1": "one"}
-      And I submit the form
-      Then a success popup message appears
-
-just with::
-
-    @pytest_bdd.when(pytest_bdd.parsers.cfparse(
-        'I set the encoded values field with:\n{encoded_values:json}',
-        extra_types=dict(json=json.loads)))
-    def set_encoded_values(navigation, encoded_values):
-        """ Set encoded values """
-        navigation.page.encoded_values = encoded_values
+objects empowered by ``pypom_form`` widgets is as easy as dealing with a Python dictionary but
+you can also perform custom interactions using the widget region API.
 
 So thanks to ``pypom_form`` widgets you can deal with rich UI widgets hiding the complexity
 making things easy for a great development and testing experience.
