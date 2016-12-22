@@ -3,5 +3,11 @@ include *.ini
 include *.txt
 include *.yml
 include *.json
+include .coveragerc
 recursive-include docs *.txt
 recursive-include pypom_form *.feature
+recursive-include docs *.bat
+recursive-include docs *.png
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
