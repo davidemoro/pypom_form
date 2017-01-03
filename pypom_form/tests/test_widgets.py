@@ -84,6 +84,54 @@ def test_string_widget_2():
         return_value.fill.assert_called_once_with('test ok') is None
 
 
+def test_textarea_widget_1():
+    """ Assert getter is implemented """
+    from pypom_form.widgets import TextAreaWidget
+    import colander
+
+    widget_class = TextAreaWidget
+
+    mock_field = colander.SchemaNode(
+        colander.String(),
+        selector=('id', 'id1'),
+        pypom_widget=TextAreaWidget(),
+    )
+
+    widget = widget_class(field=mock_field)
+    get_input_element_mock = mock.MagicMock()
+    get_input_element_mock.configure_mock(**{
+        'return_value.value': 'test ok'})
+    widget.get_input_element = get_input_element_mock
+    getter = widget.getter_factory()
+    page_mock = mock.MagicMock()
+    page_mock.__class__.getter = property(fget=getter)
+    assert page_mock.getter == 'test ok'
+
+
+def test_textarea_widget_2():
+    """ Assert setter is implemented """
+    from pypom_form.widgets import TextAreaWidget
+    import colander
+
+    widget_class = TextAreaWidget
+
+    mock_field = colander.SchemaNode(
+        colander.String(),
+        selector=('id', 'id1'),
+        pypom_widget=TextAreaWidget(),
+    )
+
+    widget = widget_class(field=mock_field)
+    get_input_element_mock = mock.MagicMock()
+    widget.get_input_element = get_input_element_mock
+    setter = widget.setter_factory()
+    page_mock = mock.MagicMock()
+    page_mock.__class__.setter = property(fset=setter)
+    page_mock.setter = 'test ok'
+    assert get_input_element_mock. \
+        return_value.fill.assert_called_once_with('test ok') is None
+
+
 def test_checkbox_widget_1():
     """ Assert getter is implemented """
     from pypom_form.widgets import CheckboxWidget
@@ -397,6 +445,25 @@ def test_widget_region_root_selector(browser):
         wait_for_region_to_load.configure_mock(**{'return_value': None})
 
         assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
+
+
+def test_widget_region_widget_reference(browser):
+    from pypom_form.widgets import BaseWidget
+    from pypom_form.widgets import BaseWidgetRegion
+
+    assert BaseWidget.region_class == BaseWidgetRegion
+
+    field = mock.MagicMock(**{'selector': ('id', 'xyz')})
+    widget = BaseWidget(field=field)
+    import pypom
+    page = pypom.Page(browser)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert widget.getWidgetRegion(page).__pypom_widget__ == widget
 
 
 def test_get_input_element(browser):

@@ -1,5 +1,5 @@
 Contributors
-============
+************
 
 * Tierra QA team <DLQA@tierratelematics.com>
 * `Full contributors list`_
