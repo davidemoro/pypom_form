@@ -11,6 +11,11 @@ Features
   navigate to the widget from the widget region and access
   to widget options specified on the schema.
 
+Documentation
+-------------
+
+- Improved documentation
+
 
 0.0.1 (2016-12-22)
 ==================

@@ -1,11 +1,11 @@
 Advanced
-========
+********
 
 Here you can see how to create a custom widget or create your own
 colander types with validators.
 
 Encoded values widget
----------------------
+=====================
 
 Let's pretend we have to manage a simple key-value widget:
 a sort of dictionary like structure where both keys and values are string types like shown
@@ -15,7 +15,7 @@ in the following picture.
 
 
 Final interaction with the widget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 For example you might have a ``I set the encoded values field with:`` BDD statement like the
 following one::
@@ -51,7 +51,7 @@ or interact step by step thanks to the widget region::
     ...
 
 Final page form setup configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 You can add a new row, delete a row, add a key and a value for each row. If you want you
 can also create some validators and contraints to your values.
@@ -76,7 +76,7 @@ widget ``EncodedValuesWidget``::
 
 
 Widget implementation
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 And now let's see our pretend custom widget implementation. The widget itself is based on:
 
@@ -265,7 +265,7 @@ Let's see the resulting code::
 
 
 Final considerations
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Now you have a dictionary like edit widget reusable across different page objects sharing
 the same data structures powered by regions and subregions. The widget interaction on page
@@ -276,7 +276,7 @@ So thanks to ``pypom_form`` widgets you can deal with rich UI widgets hiding the
 making things easy for a great development and testing experience.
 
 Extending Colander
-------------------
+==================
 
 We won't cover how to add your own custom colander types or validators, instead
 we'll address you to the Colander documentation online:
