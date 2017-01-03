@@ -146,6 +146,12 @@ class StringWidget(BaseWidget):
         return _setter
 
 
+class TextAreaWidget(StringWidget):
+    """ TextArea widget """
+
+    input_selector = ('tag', 'textarea')
+
+
 class CheckboxWidget(BaseWidget):
     """ Checkbox widget """
 
@@ -166,15 +172,3 @@ class CheckboxWidget(BaseWidget):
             else:
                 element.uncheck()
         return _setter
-
-
-# class SelectionWidget(BaseWidget):
-#     """ Selection widget """
-
-
-# class DatetimeWidget(BaseWidget):
-#     """ Datetime widget """
-
-
-# class DateWidget(BaseWidget):
-#     """ Date widget """
