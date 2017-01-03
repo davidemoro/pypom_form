@@ -1,10 +1,10 @@
-coverage==4.2
+coverage==4.3.1
 funcsigs==1.0.2
 imagesize==0.7.1
 mock==2.0.0
 pbr==1.10.0
 pluggy==0.4.0
-py==1.4.31
+py==1.4.32
 pycodestyle==2.2.0
 pytest==3.0.5
 pytest-cov==2.4.0
