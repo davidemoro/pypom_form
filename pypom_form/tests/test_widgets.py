@@ -399,6 +399,25 @@ def test_widget_region_root_selector(browser):
         assert widget.getWidgetRegion(page)._root_locator == ('id', 'xyz')
 
 
+def test_widget_region_widget_reference(browser):
+    from pypom_form.widgets import BaseWidget
+    from pypom_form.widgets import BaseWidgetRegion
+
+    assert BaseWidget.region_class == BaseWidgetRegion
+
+    field = mock.MagicMock(**{'selector': ('id', 'xyz')})
+    widget = BaseWidget(field=field)
+    import pypom
+    page = pypom.Page(browser)
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        assert widget.getWidgetRegion(page).__pypom_widget__ == widget
+
+
 def test_get_input_element(browser):
     from pypom_form.widgets import StringWidget
 
