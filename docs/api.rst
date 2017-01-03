@@ -1,8 +1,7 @@
 .. _api-pypom_form:
 
-========
-Advanced
-========
+API reference
+*************
 
 Here you can see the technical documentation.
 

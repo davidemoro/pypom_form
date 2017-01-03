@@ -1,6 +1,5 @@
-==========
 pypom_form
-==========
+**********
 
 .. image:: https://travis-ci.org/tierratelematics/pypom_form.svg?branch=master
        :target: https://travis-ci.org/tierratelematics/pypom_form

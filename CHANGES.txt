@@ -1,13 +1,23 @@
 Changelog
-=========
+*********
 
-0.0.2 (unreleased)
-------------------
+0.1.0 (unreleased)
+==================
 
-- Nothing changed yet.
+Features
+--------
+
+- Added widget reference to the widget region so you can
+  navigate to the widget from the widget region and access
+  to widget options specified on the schema.
+
+Documentation
+-------------
+
+- Improved documentation
 
 
 0.0.1 (2016-12-22)
-------------------
+==================
 
 - Initial release

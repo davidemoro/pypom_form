@@ -95,10 +95,14 @@ class BaseWidget(object):
             This is an internal method used by the page or
             region metaclass in order to be able to expose
             the widget region simply calling
-            ``page.getWidgetRegion()``
+            ``page.getWidgetRegion()``.
+
+            It also sets a reference to the widget itself containing
+            the widget options on the widget region.
         """
         region = self.region_class(page)
         region._root_locator = self.field.selector
+        region.__pypom_widget__ = self
         return region
 
     def getter_factory(self):
