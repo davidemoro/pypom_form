@@ -9,7 +9,9 @@ Features
 
 - Added widget reference to the widget region so you can
   navigate to the widget from the widget region and access
-  to widget options specified on the schema.
+  to widget options specified on the schema
+
+- Added TextAreaWidget
 
 Documentation
 -------------
