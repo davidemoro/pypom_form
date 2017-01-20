@@ -4,7 +4,15 @@ Changelog
 0.1.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+Features
+--------
+
+- Add serialize and deserialize methods on widgets base implementation
+  for advanced usage.
+  This way you can implement complex/composed widgets more easily
+  just overriding the above methods (eg: perform an intermediate
+  conversion from page model data to browser or widget internal
+  representation data)
 
 
 0.1.0 (2017-01-03)
