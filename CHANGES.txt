@@ -7,12 +7,15 @@ Changelog
 Features
 --------
 
-- Add serialize and deserialize methods on widgets base implementation
-  for advanced usage.
+- Add ``serialize`` and ``deserialize`` methods on widgets base
+  implementation for advanced usage.
   This way you can implement complex/composed widgets more easily
   just overriding the above methods (eg: perform an intermediate
   conversion from page model data to browser or widget internal
   representation data)
+
+- Added an ``ObjectType`` field for advanced usage when you
+  have to implement complex or composed widgets
 
 
 0.1.0 (2017-01-03)
