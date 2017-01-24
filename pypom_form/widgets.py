@@ -125,6 +125,20 @@ class BaseWidget(object):
         """
         raise NotImplementedError
 
+    def serialize(self, value):
+        """ Serialize value.
+            This method returns the value serialized (from model
+            value to browser or widget internal representation).
+        """
+        return self.field.serialize(value)
+
+    def deserialize(self, value):
+        """ Deserialize value.
+            This method returns the value serialized (from browser
+            or internal widget representation to model).
+        """
+        return self.field.deserialize(value)
+
 
 class StringWidget(BaseWidget):
     """ String widget """
@@ -135,12 +149,12 @@ class StringWidget(BaseWidget):
         def _getter(page):
             element = self.get_input_element(page)
             value = element.value
-            return self.field.deserialize(value)
+            return self.deserialize(value)
         return _getter
 
     def setter_factory(self):
         def _setter(page, value):
-            value = self.field.serialize(value)
+            value = self.serialize(value)
             element = self.get_input_element(page)
             element.fill(value)
         return _setter
@@ -161,7 +175,7 @@ class CheckboxWidget(BaseWidget):
         def _getter(page):
             element = self.get_input_element(page)
             value = element.checked
-            return self.field.deserialize(value)
+            return self.deserialize(value)
         return _getter
 
     def setter_factory(self):

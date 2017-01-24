@@ -1,16 +1,16 @@
 pypom_form
 **********
 
-.. image:: https://travis-ci.org/tierratelematics/pypom_form.svg?branch=master
+.. image:: https://travis-ci.org/tierratelematics/pypom_form.svg?branch=develop
        :target: https://travis-ci.org/tierratelematics/pypom_form
 
-.. image:: https://requires.io/github/tierratelematics/pypom_form/requirements.svg?branch=master
-       :target: https://requires.io/github/tierratelematics/pypom_form/requirements/?branch=master
+.. image:: https://requires.io/github/tierratelematics/pypom_form/requirements.svg?branch=develop
+       :target: https://requires.io/github/tierratelematics/pypom_form/requirements/?branch=develop
 
 .. image:: https://readthedocs.org/projects/pypom_form/badge/?version=latest
        :target: http://pypom_form.readthedocs.io
 
-.. image:: https://codecov.io/gh/tierratelematics/pypom_form/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/tierratelematics/pypom_form/branch/develop/graph/badge.svg
        :target: https://codecov.io/gh/tierratelematics/pypom_form
 
 .. image:: https://api.codacy.com/project/badge/Grade/0698c7aa2e164ee996518737aad7d6f4

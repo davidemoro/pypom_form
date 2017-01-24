@@ -2,6 +2,8 @@ from collections import OrderedDict
 
 import colander
 
+from .fields import is_readonly
+
 
 def _widgets_mapping():
     """ circular import issues """
@@ -27,7 +29,9 @@ def _getWidgetRegion(self, name):
 
 def _set(self, name, value):
     """ Set value for the given name with chained calls support """
-    setattr(self, name, value)
+    field = self.__pypom__[name]
+    if is_readonly(field) is not True:
+        setattr(self, name, value)
     return self
 
 
@@ -38,16 +42,17 @@ def _update(self, **values):
         fields.
     """
     value_keys = values.keys()
-    pypom_keys = self.__pypom__.keys()
+    pypom_values = self.__pypom__.items()
+    pypom_keys = map(lambda item: item[0], pypom_values)
 
     if not set(value_keys) <= set(pypom_keys):
         raise KeyError
 
     # values must be a subset of the available declared fields
-    for key in pypom_keys:
+    for key, node in pypom_values:
         # set values with the specific order matching with the
         # schema definition
-        if key in value_keys:
+        if key in value_keys and is_readonly(node) is not True:
             self.set(key, values[key])
 
     return self
