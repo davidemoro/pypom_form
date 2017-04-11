@@ -2,7 +2,7 @@ coverage==4.3.4
 funcsigs==1.0.2
 imagesize==0.7.1
 mock==2.0.0
-pbr==2.0.0
+pbr==2.1.0
 pluggy==0.4.0
 py==1.4.33
 pycodestyle==2.3.1
