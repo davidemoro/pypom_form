@@ -1,4 +1,4 @@
-colander==1.3.2
+colander==1.3.3
 iso8601==0.1.11
 PyPOM==1.1.1
 selenium==3.4.0
