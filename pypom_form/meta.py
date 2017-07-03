@@ -91,8 +91,16 @@ class PyPOMFormMetaclass(type):
             dct['__pypom__'] = OrderedDict()
             dct['getWidgetRegion'] = _getWidgetRegion
             dct['set'] = _set
-            dct['update'] = _update
-            dct['raw_update'] = _raw_update
+
+            if 'update' not in dct:
+                dct['update'] = _update
+            else:
+                dct['_update'] = _update
+
+            if 'raw_update' not in dct:
+                dct['raw_update'] = _raw_update
+            else:
+                dct['_raw_update'] = _raw_update
 
             schema = schema_factory()
             WIDGETS_MAPPING = _widgets_mapping()

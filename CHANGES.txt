@@ -4,7 +4,10 @@ Changelog
 0.2.2 (unreleased)
 ==================
 
-- Moved test_fields.py to right location.
+- Moved ``test_fields.py`` to right location.
+
+- Don't override ``update`` and ``raw_update`` methods on pages and
+  regions if already exist.
 
 
 0.2.1 (2017-06-01)

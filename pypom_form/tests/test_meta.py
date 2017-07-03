@@ -395,6 +395,55 @@ def test_meta_update(browser):
             subform.update(**{'another': 'another'})
 
 
+def test_meta_custom_update(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pypom_widget=MyStringWidget(
+                                       options={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+        called = False
+
+        def update(self, **values):
+            """ If you want you can override the update method logics
+                and you can still interact with the
+                pypom_form's update generated method
+            """
+            self.called = True
+            return self._update(**values)
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.title.fset)
+    mock_property = subform.__class__.title.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'title', mock_property):
+        assert subform.called is False
+        assert subform.update(**{'title': 'the title'}) == subform
+        setter_mock.assert_called_once_with(subform, 'the title')
+        assert subform.called is True
+
+        with pytest.raises(KeyError):
+            subform.update(**{'another': 'another'})
+
+
 def test_meta_raw_update(browser):
     import colander
 
@@ -428,6 +477,63 @@ def test_meta_raw_update(browser):
     with mock.patch.object(subform.__class__, 'age', mock_property):
         assert subform.raw_update(**{'age': '12'}) == subform
         setter_mock.assert_called_once_with(subform, 12)
+
+        with pytest.raises(KeyError):
+            subform.update(**{'another': 'another'})
+
+
+def test_meta_custom_raw_update(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    missing='',
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        age = colander.SchemaNode(colander.Int(),
+                                  selector=('id', 'id2'),
+                                  pypom_widget=MyStringWidget(
+                                      options={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+        called = False
+
+        def update(self, **values):
+            """ If you want you can override the update method logics
+                and you can still interact with the
+                pypom_form's update generated method
+            """
+            return self._update(**values)
+
+        def raw_update(self, **raw_values):
+            """ If you want you can override the update method logics
+                and you can still interact with the
+                pypom_form's update generated method
+            """
+            self.called = True
+            return self._raw_update(**raw_values)
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.title.fset)
+    mock_property = subform.__class__.title.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'age', mock_property):
+        assert subform.called is False
+        assert subform.raw_update(**{'age': '12'}) == subform
+        setter_mock.assert_called_once_with(subform, 12)
+        assert subform.called is True
 
         with pytest.raises(KeyError):
             subform.update(**{'another': 'another'})
