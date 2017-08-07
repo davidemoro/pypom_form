@@ -1,5 +1,5 @@
 colander==1.4
-iso8601==0.1.11
+iso8601==0.1.12
 PyPOM==1.2.0
 selenium==3.4.3
 splinter==0.7.6
