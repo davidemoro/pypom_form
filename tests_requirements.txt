@@ -8,5 +8,5 @@ py==1.4.34
 pycodestyle==2.3.1
 pytest==3.2.1
 pytest-cov==2.5.1
-tox==2.8.0
+tox==2.8.1
 virtualenv==15.1.0
