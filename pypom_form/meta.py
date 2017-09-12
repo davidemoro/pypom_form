@@ -22,52 +22,51 @@ def _widgets_mapping():
     return WIDGETS_MAPPING
 
 
-def _getWidgetRegion(self, name):
-    """ Return the widget region for the given name"""
-    return self.__pypom__[name].pypom_widget.getWidgetRegion(self)
+class PyPOMFormMixin(object):
 
+    def getWidgetRegion(self, name):
+        """ Return the widget region for the given name"""
+        return self.__pypom__[name].pypom_widget.getWidgetRegion(self)
 
-def _set(self, name, value):
-    """ Set value for the given name with chained calls support """
-    field = self.__pypom__[name]
-    if is_readonly(field) is not True:
-        setattr(self, name, value)
-    return self
+    def set(self, name, value):
+        """ Set value for the given name with chained calls support """
+        field = self.__pypom__[name]
+        if is_readonly(field) is not True:
+            setattr(self, name, value)
+        return self
 
+    def update(self, **values):
+        """ Bulk page update with chained calls support.
+            Updates fields considering the PyPOM fields order in order
+            to support edit forms with fields that depends on other
+            fields.
+        """
+        value_keys = values.keys()
+        pypom_values = self.__pypom__.items()
+        pypom_keys = map(lambda item: item[0], pypom_values)
 
-def _update(self, **values):
-    """ Bulk page update with chained calls support.
-        Updates fields considering the PyPOM fields order in order
-        to support edit forms with fields that depends on other
-        fields.
-    """
-    value_keys = values.keys()
-    pypom_values = self.__pypom__.items()
-    pypom_keys = map(lambda item: item[0], pypom_values)
+        if not set(value_keys) <= set(pypom_keys):
+            raise KeyError
 
-    if not set(value_keys) <= set(pypom_keys):
-        raise KeyError
+        # values must be a subset of the available declared fields
+        for key, node in pypom_values:
+            # set values with the specific order matching with the
+            # schema definition
+            if key in value_keys and is_readonly(node) is not True:
+                self.set(key, values[key])
 
-    # values must be a subset of the available declared fields
-    for key, node in pypom_values:
-        # set values with the specific order matching with the
-        # schema definition
-        if key in value_keys and is_readonly(node) is not True:
-            self.set(key, values[key])
+        return self
 
-    return self
-
-
-def _raw_update(self, **raw_values):
-    """ Bulk page update with chained calls support.
-        Updates fields with raw values (not deserialized)
-        considering the PyPOM fields order in order
-        to support edit forms with fields that depends on other
-        fields.
-    """
-    schema = self.schema_factory()
-    values = schema.deserialize(raw_values)
-    return self.update(**values)
+    def raw_update(self, **raw_values):
+        """ Bulk page update with chained calls support.
+            Updates fields with raw values (not deserialized)
+            considering the PyPOM fields order in order
+            to support edit forms with fields that depends on other
+            fields.
+        """
+        schema = self.schema_factory()
+        values = schema.deserialize(raw_values)
+        return self.update(**values)
 
 
 class PyPOMFormMetaclass(type):
@@ -89,18 +88,6 @@ class PyPOMFormMetaclass(type):
 
         if schema_factory:
             dct['__pypom__'] = OrderedDict()
-            dct['getWidgetRegion'] = _getWidgetRegion
-            dct['set'] = _set
-
-            if 'update' not in dct:
-                dct['update'] = _update
-            else:
-                dct['_update'] = _update
-
-            if 'raw_update' not in dct:
-                dct['raw_update'] = _raw_update
-            else:
-                dct['_raw_update'] = _raw_update
 
             schema = schema_factory()
             WIDGETS_MAPPING = _widgets_mapping()
@@ -120,5 +107,14 @@ class PyPOMFormMetaclass(type):
                     fset=child.pypom_widget.setter_factory())
 
                 dct['__pypom__'][child.name] = child
+
+        # avoid inheritance issues
+        found = False
+        for base in bases:
+            if issubclass(base, PyPOMFormMixin):
+                found = True
+                break
+        if not found:
+            bases = (PyPOMFormMixin,) + bases
 
         return type.__new__(cls, clsname, bases, dct)

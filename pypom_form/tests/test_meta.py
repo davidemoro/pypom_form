@@ -427,7 +427,7 @@ def test_meta_custom_update(browser):
                 pypom_form's update generated method
             """
             self.called = True
-            return self._update(**values)
+            return super(SubFormRegion, self).update(**values)
 
     subform = SubFormRegion(pypom.Page(browser))
     import mock
@@ -514,7 +514,7 @@ def test_meta_custom_raw_update(browser):
                 and you can still interact with the
                 pypom_form's update generated method
             """
-            return self._update(**values)
+            return super(SubFormRegion, self).update(**values)
 
         def raw_update(self, **raw_values):
             """ If you want you can override the update method logics
@@ -522,7 +522,7 @@ def test_meta_custom_raw_update(browser):
                 pypom_form's update generated method
             """
             self.called = True
-            return self._raw_update(**raw_values)
+            return super(SubFormRegion, self).raw_update(**raw_values)
 
     subform = SubFormRegion(pypom.Page(browser))
     import mock
