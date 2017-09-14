@@ -108,13 +108,13 @@ class PyPOMFormMetaclass(type):
 
                 dct['__pypom__'][child.name] = child
 
-        # avoid inheritance issues
-        found = False
-        for base in bases:
-            if issubclass(base, PyPOMFormMixin):
-                found = True
-                break
-        if not found:
-            bases = (PyPOMFormMixin,) + bases
+        # avoid TypeError: Cannot create a consistent method resolution
+        # order (MRO) for bases ... since we have to support
+        # multiple inheritance.
+        # Otherwise with (PyPOMFormMixin,) + bases we get a MRO error
+        new_base = type(
+            PyPOMFormMixin.__name__,
+            (PyPOMFormMixin,),
+            {})
 
-        return type.__new__(cls, clsname, bases, dct)
+        return type.__new__(cls, clsname, (new_base,) + bases, dct)
