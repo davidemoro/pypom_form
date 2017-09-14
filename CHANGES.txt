@@ -4,7 +4,8 @@ Changelog
 0.2.3 (unreleased)
 ==================
 
-- Nothing changed yet. 
+- Now you can override automatically generated methods and
+  invoke ``super`` inside them
 
 
 0.2.2 (2017-07-03)

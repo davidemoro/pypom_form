@@ -191,6 +191,50 @@ def test_meta_form_page_widget_region(browser):
         assert isinstance(name_region, BaseWidgetRegion)
 
 
+def test_meta_form_page_widget_region_super(browser):
+    """ test metaclass with pypom form page"""
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pypom_widget=MyStringWidget(
+                                       options={'test': 1}))
+
+    from pypom_form.form import BaseFormPage
+
+    class FormPage(BaseFormPage):
+        schema_factory = BaseFormSchema
+
+    class SubFormPage(FormPage):
+        schema_factory = SubFormSchema
+
+    subform = SubFormPage(browser)
+
+    import mock
+
+    with mock.patch(
+            'pypom_form.widgets.BaseWidgetRegion.wait_for_region_to_load') \
+            as wait_for_region_to_load:
+        wait_for_region_to_load.configure_mock(**{'return_value': None})
+
+        title_region = subform.getWidgetRegion('title')
+        name_region = subform.getWidgetRegion('name')
+
+        from pypom_form.widgets import BaseWidgetRegion
+        assert isinstance(title_region, BaseWidgetRegion)
+        assert isinstance(name_region, BaseWidgetRegion)
+
+
 def test_meta_form_region_widget_region(browser):
     """ test metaclass with pypom form page"""
     import colander
@@ -357,6 +401,108 @@ def test_meta_set(browser):
         assert subform.set('title', 'the title') == subform
         setter_mock.assert_called_once_with(subform, 'the title')
 
+    setter_mock = mock.MagicMock(wraps=subform.__class__.name.fset)
+    mock_property = subform.__class__.name.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'name', mock_property):
+        assert subform.set('name', 'the name') == subform
+        setter_mock.assert_called_once_with(subform, 'the name')
+
+
+def test_meta_set_super1(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pypom_widget=MyStringWidget(
+                                       options={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class FormRegion(BaseFormRegion):
+        schema_factory = BaseFormSchema
+
+        def set(self, name, value):
+            self.called1 = True
+            return super(FormRegion, self).set(name, value)
+
+    class SubFormRegion(FormRegion):
+        schema_factory = SubFormSchema
+
+        def set(self, name, value):
+            self.called2 = True
+            return super(SubFormRegion, self).set(name, value)
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.title.fset)
+    mock_property = subform.__class__.title.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'title', mock_property):
+        assert subform.set('title', 'the title') == subform
+        setter_mock.assert_called_once_with(subform, 'the title')
+
+    assert subform.called1
+    assert subform.called2
+
+
+def test_meta_set_super2(browser):
+    import colander
+
+    from pypom_form.widgets import StringWidget
+
+    class MyStringWidget(StringWidget):
+        pass
+
+    class BaseFormSchema(colander.MappingSchema):
+        title = colander.SchemaNode(colander.String(),
+                                    selector=('id', 'id1'))
+
+    class SubFormSchema(BaseFormSchema):
+        name = colander.SchemaNode(colander.String(),
+                                   selector=('id', 'id2'),
+                                   pypom_widget=MyStringWidget(
+                                       options={'test': 1}))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class FormRegion(BaseFormRegion):
+        schema_factory = BaseFormSchema
+
+        def set(self, name, value):
+            self.called1 = True
+            return super(FormRegion, self).set(name, value)
+
+    class SubFormRegion(FormRegion):
+        schema_factory = SubFormSchema
+
+        def set(self, name, value):
+            self.called2 = True
+            return super(SubFormRegion, self).set(name, value)
+
+    subform = SubFormRegion(pypom.Page(browser))
+    import mock
+
+    setter_mock = mock.MagicMock(wraps=subform.__class__.name.fset)
+    mock_property = subform.__class__.name.setter(setter_mock)
+    with mock.patch.object(subform.__class__, 'name', mock_property):
+        assert subform.set('name', 'the name') == subform
+        setter_mock.assert_called_once_with(subform, 'the name')
+
+    assert subform.called1
+    assert subform.called2
+
 
 def test_meta_update(browser):
     import colander
@@ -427,7 +573,7 @@ def test_meta_custom_update(browser):
                 pypom_form's update generated method
             """
             self.called = True
-            return self._update(**values)
+            return super(SubFormRegion, self).update(**values)
 
     subform = SubFormRegion(pypom.Page(browser))
     import mock
@@ -514,7 +660,7 @@ def test_meta_custom_raw_update(browser):
                 and you can still interact with the
                 pypom_form's update generated method
             """
-            return self._update(**values)
+            return super(SubFormRegion, self).update(**values)
 
         def raw_update(self, **raw_values):
             """ If you want you can override the update method logics
@@ -522,7 +668,7 @@ def test_meta_custom_raw_update(browser):
                 pypom_form's update generated method
             """
             self.called = True
-            return self._raw_update(**raw_values)
+            return super(SubFormRegion, self).raw_update(**raw_values)
 
     subform = SubFormRegion(pypom.Page(browser))
     import mock
