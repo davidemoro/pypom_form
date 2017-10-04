@@ -4,7 +4,7 @@ Changelog
 0.2.4 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Added a ``dump`` method to get all the fields in bulk.
 
 
 0.2.3 (2017-09-14)

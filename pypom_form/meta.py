@@ -57,6 +57,10 @@ class PyPOMFormMixin(object):
 
         return self
 
+    def dump(self):
+        """ Dumps all fields. """
+        return {key: getattr(self, key) for key in self.__pypom__.keys()}
+
     def raw_update(self, **raw_values):
         """ Bulk page update with chained calls support.
             Updates fields with raw values (not deserialized)
