@@ -1,7 +1,7 @@
 Changelog
 *********
 
-0.2.4 (unreleased)
+0.3.0 (unreleased)
 ==================
 
 - Added a ``dump`` method to get all the fields in bulk.
