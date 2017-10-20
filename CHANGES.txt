@@ -4,7 +4,7 @@ Changelog
 0.3.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Added a ``raw_dump`` method to get all the fields serialized.
 
 
 0.3.0 (2017-10-10)
