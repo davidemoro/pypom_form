@@ -72,6 +72,12 @@ class PyPOMFormMixin(object):
         values = schema.deserialize(raw_values)
         return self.update(**values)
 
+    def raw_dump(self):
+        """ Dumps all fields in raw serialized format. """
+        schema = self.schema_factory()
+        values = self.dump()
+        return schema.serialize(values)
+
 
 class PyPOMFormMetaclass(type):
     """ This is the metaclass that empower the page or region

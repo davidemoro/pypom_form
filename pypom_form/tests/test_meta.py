@@ -774,3 +774,43 @@ def test_meta_custom_dump(browser):
     subform = SubFormRegion(pypom.Page(browser))
     assert {"string": "a string", "boolean": True} == subform.dump()
     assert subform.called
+
+
+def test_meta_raw_dump(browser):
+    import colander
+
+    from pypom_form.widgets import BaseWidget
+
+    class FakeWidget(BaseWidget):
+
+        def __init__(self, value):
+            self.value = value
+
+        def getter_factory(self):
+            def _getter(page):
+                return self.value
+            return _getter
+
+        def setter_factory(self):
+            def _setter(page, value):
+                self.value = value
+            return _setter
+
+    class BaseFormSchema(colander.MappingSchema):
+        string = colander.SchemaNode(colander.String(),
+                                     selector=('id', 'id1'),
+                                     pypom_widget=FakeWidget("a string"))
+
+    class SubFormSchema(BaseFormSchema):
+        boolean = colander.SchemaNode(colander.Bool(),
+                                      selector=('id', 'id2'),
+                                      pypom_widget=FakeWidget(True))
+
+    import pypom
+    from pypom_form.form import BaseFormRegion
+
+    class SubFormRegion(BaseFormRegion):
+        schema_factory = SubFormSchema
+
+    subform = SubFormRegion(pypom.Page(browser))
+    assert {"string": "a string", "boolean": "true"} == subform.raw_dump()
