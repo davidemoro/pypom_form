@@ -1,4 +1,4 @@
-coverage==4.4.1
+coverage==4.4.2
 funcsigs==1.0.2
 imagesize==0.7.1
 mock==2.0.0
