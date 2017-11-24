@@ -4,9 +4,6 @@ pypom_form
 .. image:: https://travis-ci.org/tierratelematics/pypom_form.svg?branch=develop
        :target: https://travis-ci.org/tierratelematics/pypom_form
 
-.. image:: https://requires.io/github/tierratelematics/pypom_form/requirements.svg?branch=develop
-       :target: https://requires.io/github/tierratelematics/pypom_form/requirements/?branch=develop
-
 .. image:: https://readthedocs.org/projects/pypom_form/badge/?version=latest
        :target: http://pypom_form.readthedocs.io
 
