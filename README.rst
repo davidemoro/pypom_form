@@ -1,20 +1,20 @@
 pypom_form
 **********
 
-.. image:: https://travis-ci.org/tierratelematics/pypom_form.svg?branch=develop
-       :target: https://travis-ci.org/tierratelematics/pypom_form
+.. image:: https://travis-ci.org/davidemoro/pypom_form.svg?branch=develop
+       :target: https://travis-ci.org/davidemoro/pypom_form
 
 .. image:: https://readthedocs.org/projects/pypom_form/badge/?version=latest
        :target: http://pypom_form.readthedocs.io
 
-.. image:: https://codecov.io/gh/tierratelematics/pypom_form/branch/develop/graph/badge.svg
-       :target: https://codecov.io/gh/tierratelematics/pypom_form
+.. image:: https://codecov.io/gh/davidemoro/pypom_form/branch/develop/graph/badge.svg
+       :target: https://codecov.io/gh/davidemoro/pypom_form
 
 .. image:: https://api.codacy.com/project/badge/Grade/0698c7aa2e164ee996518737aad7d6f4
-       :target: https://www.codacy.com/app/davide-moro/pypom_form?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tierratelematics/pypom_form&amp;utm_campaign=Badge_Grade
+       :target: https://www.codacy.com/app/davide-moro/pypom_form?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=davidemoro/pypom_form&amp;utm_campaign=Badge_Grade
        
-.. image:: https://pyup.io/repos/github/tierratelematics/pypom_form/python-3-shield.svg
-     :target: https://pyup.io/repos/github/tierratelematics/pypom_form/
+.. image:: https://pyup.io/repos/github/davidemoro/pypom_form/python-3-shield.svg
+     :target: https://pyup.io/repos/github/davidemoro/pypom_form/
      :alt: Python 3
 
 
