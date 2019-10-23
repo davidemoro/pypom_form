@@ -37,12 +37,14 @@ pypom_form it is internally based on:
 How does it work?
 =================
 
-Whith pypom_form you have just to:
+With pypom_form you have just to:
 
-* instanciate a page object instance whose class inherits from BaseFormPage provided by pypom_form
+* instantiate a page object instance whose class inherits from BaseFormPage provided by pypom_form
 * declare the schema model
 
-And you will be ready for interacting with your page driving the browser with your form just typing::
+And you will be ready for interacting with your page driving the browser with your form just typing:
+
+.. code-block:: python
 
     page.title = 'the title'
     page.title
@@ -64,7 +66,7 @@ The inner implementation of widgets provided by pypom_form is based on PyPOM's R
 wraps and manage a DOM containing the widget.
 
 Basically the widget translates data from the applicative domain to the browser domain and vice versa
-through serialization and deserialization.
+through serialization and de-serialization.
 
 You might thing about a widget as how you have to driver your browser when you set ``True`` to a boolean
 property or get the actual value on the form: basically it depends on the widget implementation. For example
@@ -79,7 +81,9 @@ You might have to deal with complex widgets too like:
 * etc
 
 For example, assuming you are dealing with a pretend advanced single selection choice field you can
-access to advanced logics provided by the ``widget region``::
+access to advanced logics provided by the ``widget region``:
+
+.. code-block:: python
 
     page.getWidgetRegion('state').filter('virg').select('Virginia')
 
@@ -108,10 +112,10 @@ plain page object model pattern but with pypom_form you have the following advan
 * page and schema inheritance supported as well
 * easy test multi skin web applications with same data model, same or different selectors or widget
   types. So you can reuse all your page object classes as they are defined, it changes only the schema
-  widget selector adn widget types
+  widget selector and widget types
 * widget regions are PyPOM regions, so if you want to access inner elements inside the widget container
   the resulting selectors will be simpler because they are relative to the widget region root.
-  Also sub/nested regions or dynamic regions are supperted as well
+  Also sub/nested regions or dynamic regions are supported as well
 * interact with your model with applicative domain data instead of browser domain data. It is more
   simple and easy to manage Python data (for example you set 12.9 instead of '12.9', same for datetimes
   values like ``datetime.now()``)
@@ -143,7 +147,9 @@ the PyPOM documentation:
 
 * http://pypom.readthedocs.io/en/latest/
 
-Schema definition::
+Schema definition:
+
+.. code-block:: python
 
     import colander
     
@@ -165,7 +171,9 @@ Schema definition::
         schema_factory = BaseEditSchema
 
 And assuming you have a page instance you can interact with the above page
-just setting an attribute::
+just setting an attribute:
+
+.. code-block:: python
 
     @pytest_bdd.when(pytest_bdd.parsers.parse(
         'I set {name} as name field'))
@@ -174,7 +182,9 @@ just setting an attribute::
         page.name = name
 
 You can also define other pages with extended schema, for example an integer
-type::
+type:
+
+.. code-block:: python
 
     class AnotherPageEditSchema(BaseEditSchema):
     
@@ -188,7 +198,9 @@ type::
 but you can create also field types like ``colander.Bool`` or any other colander
 supported types.
 
-And the test::
+And the test:
+
+.. code-block:: python
 
     @pytest_bdd.when(pytest_bdd.parsers.cfparse(
         'I set {duration:Number} as Alarm duration',
@@ -202,7 +214,9 @@ and not a string. So you can perform ``page.duration += 10`` for example.
 
 You can also define custom widgets on fields if the default implementation does
 not match the one available on your application (for example a non standard
-checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``::
+checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``:
+
+.. code-block:: python
 
     mybool = colander.SchemaNode(
         colander.Bool(),
@@ -215,13 +229,17 @@ checkbox for a boolean widget), for example a pretend ``MyBooleanWidget``::
     )
 
 Also chained calls are supported (eg: set the title, perform the pretend submit method
-and then set a boolean)::
+and then set a boolean):
+
+.. code-block:: python
 
     page.set('title', 'the title'). \
         .submit(). \
         .set('mybool', False)
 
-or bulk updates. All changes occurs following the fields order at schema level::
+or bulk updates. All changes occurs following the fields order at schema level:
+
+.. code-block:: python
 
     page.update(**{'title': 'the title', 'mybool': True})
 
@@ -229,7 +247,9 @@ The ``update`` or ``raw_update`` can be used in test preconditions creation.
 Assuming you have a generic given step with parametrized with a complex configuration
 you can pass the raw json data and the ``raw_update`` will take care about the
 data conversion from browser model (eg: string) to the page model (strings, integers,
-datetimes, etc)::
+datetimes, etc):
+
+.. code-block:: python
 
     @pytest_bdd.given(pytest_bdd.parsers.cfparse(
         'I have a CAN bus protocol configured with:\n{raw_conf:json}',
