@@ -37,9 +37,9 @@ pypom_form it is internally based on:
 How does it work?
 =================
 
-Whith pypom_form you have just to:
+With pypom_form you have just to:
 
-* instanciate a page object instance whose class inherits from BaseFormPage provided by pypom_form
+* instantiate a page object instance whose class inherits from BaseFormPage provided by pypom_form
 * declare the schema model
 
 And you will be ready for interacting with your page driving the browser with your form just typing::
@@ -64,7 +64,7 @@ The inner implementation of widgets provided by pypom_form is based on PyPOM's R
 wraps and manage a DOM containing the widget.
 
 Basically the widget translates data from the applicative domain to the browser domain and vice versa
-through serialization and deserialization.
+through serialization and de-serialization.
 
 You might thing about a widget as how you have to driver your browser when you set ``True`` to a boolean
 property or get the actual value on the form: basically it depends on the widget implementation. For example
@@ -108,10 +108,10 @@ plain page object model pattern but with pypom_form you have the following advan
 * page and schema inheritance supported as well
 * easy test multi skin web applications with same data model, same or different selectors or widget
   types. So you can reuse all your page object classes as they are defined, it changes only the schema
-  widget selector adn widget types
+  widget selector and widget types
 * widget regions are PyPOM regions, so if you want to access inner elements inside the widget container
   the resulting selectors will be simpler because they are relative to the widget region root.
-  Also sub/nested regions or dynamic regions are supperted as well
+  Also sub/nested regions or dynamic regions are supported as well
 * interact with your model with applicative domain data instead of browser domain data. It is more
   simple and easy to manage Python data (for example you set 12.9 instead of '12.9', same for datetimes
   values like ``datetime.now()``)
